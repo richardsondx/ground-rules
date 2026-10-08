@@ -1,1 +1,48 @@
-{"description":"Compile natural-language intent into validated, enforceable agent policy.","devDependencies":{"tsx":"^4.19.0","typescript":"^5.6.0","vitest":"^2.1.0"},"engines":{"node":">=20"},"exports":{".":{"default":"./dist/index.js","types":"./dist/index.d.ts"}},"files":["dist","README.md","LICENSE","llms.txt"],"keywords":["ai-agents","guardrails","policy","policy-as-code","llm","ai-safety"],"license":"MIT","main":"./dist/index.js","name":"ground-rules","repository":{"type":"git","url":"https://github.com/richardsondx/ground-rules"},"scripts":{"build":"tsc","demo":"tsx demo/demo.ts","test":"vitest run","typecheck":"tsc --noEmit"},"type":"module","types":"./dist/index.d.ts","version":"0.1.0"}
+{
+  "description": "Compile natural-language intent into validated, enforceable agent policy.",
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "llms.txt"
+  ],
+  "keywords": [
+    "ai-agents",
+    "guardrails",
+    "policy",
+    "policy-as-code",
+    "llm",
+    "ai-safety"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "ground-rules",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richardsondx/ground-rules"
+  },
+  "scripts": {
+    "build": "tsc",
+    "demo": "tsx demo/demo.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "0.1.0"
+}
