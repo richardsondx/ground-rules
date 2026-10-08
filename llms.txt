@@ -1,0 +1,31 @@
+# llms.txt for ground-rules
+
+> Compile natural-language agent constraints into validated, enforceable policy.
+
+## Install
+npm i ground-rules
+
+## What it does
+- compileRules(text): deterministic, offline. "Never delete production" becomes a deny rule on delete_*. "Refunds over $500 need approval" becomes require_approval on refund_* with labels {amount_usd_gte:"500"}. "Only read X" becomes allow read_* plus deny update_* and deny delete_*.
+- validatePolicy(policy): finds conflicting rules, shadowed (unreachable) rules, and risky shapes like allow on tool "*". Assumes first-match-wins order.
+- compileWithModel(text, model): sends a schema-constrained prompt to your LLM, parses JSON, validates, throws on conflicts.
+
+## Quickstart
+import { compileRules, validatePolicy } from "ground-rules";
+const policy = compileRules("Never touch production without asking.\nRefunds over $500 need approval.");
+// policy = { version:"1", default:"deny", rules:[...] }
+const report = validatePolicy(policy);
+// report = { conflicts:[], unreachable:[], warnings:[] }
+
+## Policy shape (callgate-compatible)
+{ version:"1", default:"deny", rules:[{ on:"tool.call", where:{ tool:"read_*", labels:{ env:"production" } }, decide:"allow"|"deny"|"require_approval"|"redact"|"defer"|"escalate"|"simulate", to?:"escalation-target" }] }
+Tool matchers are globs: "*" matches all, "read_*" matches read_customer. Labels carry conditions the enforcing gate evaluates (env, amount_usd_gte).
+
+## Limits
+- Deterministic compiler covers common phrasings; novel phrasing needs compileWithModel with your own LLM function.
+- Label-based numeric conditions (amount_usd_gte) need a gate that evaluates them.
+- Validator catches subsumption conflicts, not partial-overlap edge cases.
+
+## Links
+- Repo: https://github.com/richardsondx/ground-rules
+- License: MIT
